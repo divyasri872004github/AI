@@ -1,0 +1,16 @@
+% Define the vowels
+is_vowel(Char) :-
+    member(Char, ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']).
+
+% Count the number of vowels in a list of characters
+count_vowels([], 0). % Base case: an empty list has 0 vowels
+count_vowels([H|T], Count) :-
+    count_vowels(T, CountTail), % Recursively count vowels in the tail
+    (is_vowel(H) -> Count is CountTail + 1 ; Count is CountTail). % Increment count if head is a vowel
+
+% Wrapper predicate to convert a string to a list and count vowels
+count_vowels_in_string(String, Count) :-
+    string_chars(String, CharList), % Convert the string to a list of characters
+    count_vowels(CharList, Count).   % Count the vowels in the list
+example query:
+?- count_vowels_in_string("Hello World", Count).
